@@ -62,7 +62,7 @@ test_set = test_datagen.flow_from_directory('test',
 
 classifier.fit_generator(training_set,
                          samples_per_epoch = 8000,
-                         nb_epoch = 10,
+                         nb_epoch = 15,
                          validation_data = test_set,
                          nb_val_samples = 2000)
 
@@ -118,7 +118,7 @@ test_set_2 = test_datagen_2.flow_from_directory('test_2',
 
 classifier_2.fit_generator(training_set_2,
                          samples_per_epoch = 8000,
-                         nb_epoch = 10,
+                         nb_epoch = 15,
                          validation_data = test_set_2,
                          nb_val_samples = 2000)
 
