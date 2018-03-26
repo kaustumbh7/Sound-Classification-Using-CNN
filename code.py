@@ -7,19 +7,6 @@ Created on Sat Mar 24 23:37:45 2018
 """
 
 
-# Convolutional Neural Network
-
-# Installing Theano
-# pip install --upgrade --no-deps git+git://github.com/Theano/Theano.git
-
-# Installing Tensorflow
-# Install Tensorflow from the website: https://www.tensorflow.org/versions/r0.12/get_started/os_setup.html
-
-# Installing Keras
-# pip install --upgrade keras
-
-# Part 1 - Building the CNN
-
 # Importing the Keras libraries and packages
 from keras.models import Sequential
 from keras.layers import Convolution2D
@@ -27,30 +14,32 @@ from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 from keras.layers import Dense
 
+# Classifier 1 trained to identify Chainsaw sounds
+
 # Initialising the CNN
 classifier = Sequential()
 
-# Step 1 - Convolution
+# Convolution
 classifier.add(Convolution2D(32, 3, 3, input_shape = (64, 64, 3), activation = 'relu'))
 
-# Step 2 - Pooling
+# Pooling
 classifier.add(MaxPooling2D(pool_size = (2, 2)))
 
 # Adding a second convolutional layer
 classifier.add(Convolution2D(32, 3, 3, activation = 'relu'))
 classifier.add(MaxPooling2D(pool_size = (2, 2)))
 
-# Step 3 - Flattening
+# Flattening
 classifier.add(Flatten())
 
-# Step 4 - Full connection
+# Full connection
 classifier.add(Dense(output_dim = 128, activation = 'relu'))
 classifier.add(Dense(output_dim = 1, activation = 'sigmoid'))
 
 # Compiling the CNN
 classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
 
-# Part 2 - Fitting the CNN to the images
+# Fitting the CNN to the images
 
 from keras.preprocessing.image import ImageDataGenerator
 
@@ -81,32 +70,32 @@ classifier.fit_generator(training_set,
 
 ###############################################################################
 
-# CLASSIFIER 2
+# CLASSIFIER 2 trained to identify Gunshots sound
 
 # Initialising the CNN
 classifier_2 = Sequential()
 
-# Step 1 - Convolution
+# Convolution
 classifier_2.add(Convolution2D(32, 3, 3, input_shape = (64, 64, 3), activation = 'relu'))
 
-# Step 2 - Pooling
+# Pooling
 classifier_2.add(MaxPooling2D(pool_size = (2, 2)))
 
 # Adding a second convolutional layer
 classifier_2.add(Convolution2D(32, 3, 3, activation = 'relu'))
 classifier_2.add(MaxPooling2D(pool_size = (2, 2)))
 
-# Step 3 - Flattening
+# Flattening
 classifier_2.add(Flatten())
 
-# Step 4 - Full connection
+# Full connection
 classifier_2.add(Dense(output_dim = 128, activation = 'relu'))
 classifier_2.add(Dense(output_dim = 1, activation = 'sigmoid'))
 
 # Compiling the CNN
 classifier_2.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
 
-# Part 2 - Fitting the CNN to the images
+# Fitting the CNN to the images
 
 from keras.preprocessing.image import ImageDataGenerator
 
@@ -150,7 +139,7 @@ CHANNELS = 2
 RATE = 44100
 CHUNK = 1024
 RECORD_SECONDS = 5
-WAVE_OUTPUT_FILENAME = "file.wav"
+WAVE_OUTPUT_FILENAME = "test_file.wav"
  
 audio = pyaudio.PyAudio()
  
@@ -191,20 +180,21 @@ import librosa.display
 import glob 
 import matplotlib.pyplot as plt
 
-data, sampling_rate = librosa.load('gun.mp3')
+data, sampling_rate = librosa.load('test_file.wav')
 
 fig = plt.figure(figsize=(12, 4))
-fig.savefig('ttt.jpg')
+fig.savefig('test.jpg')
 graph_test = librosa.display.waveplot(data, sr=sampling_rate)
 
 
 
 ###############################################################################
 
+# Making predictions on the test sample
 
 import numpy as np
 from keras.preprocessing import image
-test_image1 = image.load_img('ttt1.jpg', target_size= (64,64))
+test_image1 = image.load_img('test.jpg', target_size= (64,64))
 test_image1 = image.img_to_array(test_image1)
 test_image1 = np.expand_dims(test_image1, axis=0)
 result = classifier.predict(test_image1)
